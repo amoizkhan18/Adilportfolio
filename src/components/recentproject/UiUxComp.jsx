@@ -1,67 +1,96 @@
 'use client';
 import Image from 'next/image';
-import Link from 'next/link';
 import { useState, useEffect } from 'react';
 
 function UIUXProjects() {
     const [loadedImages, setLoadedImages] = useState({});
-    const [popupMessage, setPopupMessage] = useState('');
+    const [popupImage, setPopupImage] = useState('');
 
     const projects = [
         {
             id: 1,
-            title: 'SEO Lifetime',
-            description: 'Boosting online visibility through expert SEO and digital marketing services.',
-            imageSrc: '/images/recentproject/uiux/expert.png',
-            alt: 'seo lifetime',
-            link: 'https://seolifetime.com',
+            title: 'Optio Leads',
+            description: 'Tap to open the full site design',
+            imageSrc: '/images/recentproject/uiux/optio.png',
+            popupImg: '/images/recentproject/uiux/optio-full.png',
+            alt: 'Optio Leads',
             category: 'UI/UX',
         },
         {
             id: 2,
-            title: 'SIP Operations',
-            description: 'Delivering tailored digital solutions in UI/UX design, web development, and IT services.',
-            imageSrc: '/images/recentproject/uiux/sip.png',
-            alt: 'sip operations',
-            link: 'https://sipoperations.au',
+            title: 'Kids Store Mobile Ui',
+            description: 'Tap to open the full site design',
+            imageSrc: '/images/recentproject/uiux/kidstore.png',
+            popupImg: '/images/recentproject/uiux/kidstore-full.png',
+            alt: 'Kids Store Mobile Ui',
             category: 'UI/UX',
         },
         {
             id: 3,
-            title: 'Metex ltd',
-            description: 'Offering innovative construction tools and equipment to improve project efficiency and quality.',
-            imageSrc: '/images/recentproject/uiux/metex.png',
-            alt: 'metex ltd',
-            link: 'https://metex.ltd',
+            title: 'Unity EPOS',
+            description: 'Tap to open the full site design',
+            imageSrc: '/images/recentproject/uiux/unity.png',
+            popupImg: '/images/recentproject/uiux/unity-full.png',
+            alt: 'Unity EPOS',
             category: 'Graphic Designing',
         },
         {
             id: 4,
-            title: 'NextGen Innovation',
+            title: 'NextGen Innvovation',
             description:
-                'We help businesses grow online with data-driven strategies, seamless Shopify development, and impactful digital marketing.',
+                'Tap to open the full site design ',
             imageSrc: '/images/recentproject/uiux/nextgen.png',
+            popupImg: '/images/recentproject/uiux/nextgen-full.png',
             alt: 'nextgen innovation',
-            link: '/',
             category: 'Motion Designing',
         },
         {
             id: 5,
-            title: 'Mother Helpage',
-            description: 'Offering innovative construction tools and equipment to improve project efficiency and quality.',
-            imageSrc: '/images/recentproject/uiux/mhelp.png',
-            alt: 'mother helpage',
-            link: '/', 
+            title: 'Acrosoft',
+            description: 'Tap to open the full site design',
+            imageSrc: '/images/recentproject/uiux/acrosoft.png',
+            popupImg: '/images/recentproject/uiux/acrosoft-full.png',
+            alt: 'Acrosoft',
             category: 'Logo Design',
         },
         {
             id: 6,
-            title: 'Acrosoft',
+            title: 'Mother Helpage',
             description:
-                'We help businesses grow online with data-driven strategies, seamless Shopify development, and impactful digital marketing.',
-            imageSrc: '/images/recentproject/uiux/acrosoft.png',
-            alt: 'acrosoft',
-            link: '/', 
+                'Tap to open the full site design',
+            imageSrc: '/images/recentproject/uiux/motherhelppage.png',
+            popupImg: '/images/recentproject/uiux/motherhelppage-full.png',
+            alt: 'Mother Helpage',
+            category: 'Logo Design',
+        },
+        {
+            id: 7,
+            title: 'VisioChart',
+            description:
+                'Tap to open the full site design',
+            imageSrc: '/images/recentproject/uiux/visiochart.png',
+            popupImg: '/images/recentproject/uiux/visiochart-full.png',
+            alt: 'VisioChart',
+            category: 'Logo Design',
+        },
+        {
+            id: 8,
+            title: 'Strategic IT Partners',
+            description:
+                'Tap to open the full site design',
+            imageSrc: '/images/recentproject/uiux/sip.png',
+            popupImg: '/images/recentproject/uiux/sip-full.png',
+            alt: 'Strategic IT Partners',
+            category: 'Logo Design',
+        },
+        {
+            id: 9,
+            title: 'Shirakatdari',
+            description:
+                'Tap to open the full site design',
+            imageSrc: '/images/recentproject/uiux/shirakatdari.png',
+            popupImg: '/images/recentproject/uiux/shirakatdari-full.png',
+            alt: 'Shirakatdari',
             category: 'Logo Design',
         },
     ];
@@ -70,34 +99,26 @@ function UIUXProjects() {
         setLoadedImages((prev) => ({ ...prev, [id]: true }));
     };
 
-    const handleClick = (e, project) => {
-        if (project.link === '/') {
-            e.preventDefault();
-            setPopupMessage(`${project.title} website is under development 🚧`);
-        }
+    const handleClick = (project) => {
+        setPopupImage(project.popupImg);
     };
 
     useEffect(() => {
-        if (popupMessage) {
+        if (popupImage) {
             document.body.classList.add('no-scroll');
         } else {
             document.body.classList.remove('no-scroll');
         }
-
-        return () => {
-            document.body.classList.remove('no-scroll');
-        };
-    }, [popupMessage]);
+        return () => document.body.classList.remove('no-scroll');
+    }, [popupImage]);
 
     return (
         <div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 md:grid-cols-3 gap-4">
                 {projects.map((project) => (
-                    <Link
-                        href={project.link}
+                    <div
                         key={project.id}
-                        target={project.link !== '/' ? '_blank' : '_self'}
-                        onClick={(e) => handleClick(e, project)}
+                        onClick={() => handleClick(project)}
                     >
                         <div className="relative group">
                             {!loadedImages[project.id] && (
@@ -110,14 +131,13 @@ function UIUXProjects() {
                                 </div>
                             )}
                             <div
-                                className={`bg-[#151415] rounded-3xl p-2 transition-opacity duration-300 ${
-                                    loadedImages[project.id] ? 'opacity-100' : 'opacity-0'
-                                } ${!loadedImages[project.id] ? 'absolute top-0 left-0' : ''}`}
+                                className={`bg-[#151415] rounded-3xl p-2 transition-opacity duration-300 ${loadedImages[project.id] ? 'opacity-100' : 'opacity-0'
+                                    } ${!loadedImages[project.id] ? 'absolute top-0 left-0' : ''}`}
                             >
                                 <div className="mb-2">
                                     <Image
                                         src={project.imageSrc}
-                                        width={462}
+                                        width={297}
                                         height={296}
                                         alt={project.alt}
                                         className="object-contain w-full md:w-[462px]"
@@ -126,7 +146,8 @@ function UIUXProjects() {
                                 </div>
                                 <div className="p-4">
                                     <div className="flex justify-between items-center mb-2">
-                                        <h3 className="text-lg md:text-[24px] font-semibold text-white">{project.title}</h3>
+                                        <h3 className="text-transparent bg-gradient-to-r from-[#A8A8A8] via-[#FFFFFF] to-[#A8A8A8] bg-clip-text text-[18px] 
+                                        md:text-[18px] font-medium unbounded-font animate-gradient">{project.title}</h3>
                                         <Image
                                             src="/images/service/arrow.png"
                                             alt="arrow"
@@ -139,19 +160,24 @@ function UIUXProjects() {
                                 </div>
                             </div>
                         </div>
-                    </Link>
+                    </div>
                 ))}
             </div>
-
-            {popupMessage && (
-                <div className="fixed inset-0 backdrop-blur-xs bg-opacity-30 z-[200] flex items-center justify-center">
-                    <div className="bg-[#151415] text-white p-6 rounded-2xl max-w-sm text-center mx-4 sm:mx-4 md:mx-0">
-                        <p>{popupMessage}</p>
+            {popupImage && (
+                <div className="fixed inset-0 bg-black/80 z-[300] flex justify-center items-start overflow-y-auto popupscroll">
+                    <div className="relative min-h-screen w-full flex justify-center items-center px-[20px] md:px-0 py-10">
+                        <Image
+                            src={popupImage}
+                            alt="Full preview"
+                            width={893}
+                            height={4096}
+                            className="object-contain h-full rounded-[8px]"
+                        />
                         <button
-                            onClick={() => setPopupMessage('')}
-                            className="mt-4 bg-[#8B5CF6] text-white px-4 py-2 rounded-lg"
+                            onClick={() => setPopupImage('')}
+                            className="cursor-pointer fixed top-5 right-5 lg:right-10 flex items-center justify-center bg-[#ffff] text-[16px] md:text-[18px] w-10 h-10 rounded-full hover:bg-[#8B5CF6] text-[#8B5CF6] hover:text-[#ffff] transition-all"
                         >
-                            Close
+                            ✖
                         </button>
                     </div>
                 </div>
