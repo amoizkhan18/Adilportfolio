@@ -106,22 +106,23 @@ function UIUXProjects() {
 
     // };
 
-    const handleClick = (project) => {
-        setPopupLoading(true);
-        setPopupImage(''); 
-        setTimeout(() => {
-            setPopupImage(project.popupImg);
-        }, 100); 
-    };
+ const handleClick = (project) => {
+    setPopupLoading(true);
+    setPopupImage(''); // clear previous
+    // wait a tiny bit to ensure loader renders before image starts
+    setTimeout(() => {
+        setPopupImage(project.popupImg);
+    }, 50);
+};
 
-    useEffect(() => {
-        if (popupLoading) {
-            const timer = setTimeout(() => {
-                setPopupLoading(false);
-            }, 5000); 
-            return () => clearTimeout(timer);
-        }
-    }, [popupLoading]);
+    // useEffect(() => {
+    //     if (popupLoading) {
+    //         const timer = setTimeout(() => {
+    //             setPopupLoading(false);
+    //         }, 5000); 
+    //         return () => clearTimeout(timer);
+    //     }
+    // }, [popupLoading]);
 
 
     useEffect(() => {
@@ -221,7 +222,7 @@ function UIUXProjects() {
                 <div className="fixed inset-0 bg-black/80 z-[300] flex justify-center items-start overflow-y-auto popupscroll">
                     <div className="relative min-h-screen w-full flex justify-center items-center px-[20px] md:px-0 py-10">
 
-                        {/* Spinner Loader */}
+                        {/* Loader (visible until image loads) */}
                         {popupLoading && (
                             <div className="absolute inset-0 z-[310] flex justify-center items-center bg-black/40 rounded-[8px]">
                                 <div className="w-12 h-12 border-4 border-t-[#8B5CF6] border-gray-300 rounded-full animate-spin"></div>
@@ -229,17 +230,14 @@ function UIUXProjects() {
                         )}
 
                         {/* Popup Image */}
-                        {!popupLoading && (
-                            <div className="relative z-[320] flex justify-center">
-                                <Image
-                                    src={popupImage}
-                                    alt="Full preview"
-                                    width={893}
-                                    height={4096}
-                                    className="object-contain h-full rounded-[8px] transition-opacity duration-300 opacity-100"
-                                />
-                            </div>
-                        )}
+                        <Image
+                            src={popupImage}
+                            alt="Full preview"
+                            width={893}
+                            height={4096}
+                            className={`object-contain h-full rounded-[8px] transition-opacity duration-500 ${popupLoading ? 'opacity-0' : 'opacity-100'}`}
+                            onLoad={() => setPopupLoading(false)} // hide loader once image is ready
+                        />
 
                         {/* Close Button */}
                         <button
@@ -254,6 +252,7 @@ function UIUXProjects() {
                     </div>
                 </div>
             )}
+
         </div>
     );
 }
