@@ -118,7 +118,7 @@ function UIUXProjects() {
         if (popupLoading) {
             const timer = setTimeout(() => {
                 setPopupLoading(false);
-            }, 1000); 
+            }, 5000); 
             return () => clearTimeout(timer);
         }
     }, [popupLoading]);
