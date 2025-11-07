@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react';
 function UIUXProjects() {
     const [loadedImages, setLoadedImages] = useState({});
     const [popupImage, setPopupImage] = useState('');
+    const [popupLoading, setPopupLoading] = useState(false);
 
     const projects = [
         {
@@ -99,9 +100,29 @@ function UIUXProjects() {
         setLoadedImages((prev) => ({ ...prev, [id]: true }));
     };
 
+    // const handleClick = (project) => {
+    //     setPopupImage(project.popupImg);
+    //     setPopupLoading(true);
+
+    // };
+
     const handleClick = (project) => {
-        setPopupImage(project.popupImg);
+        setPopupLoading(true);
+        setPopupImage(''); 
+        setTimeout(() => {
+            setPopupImage(project.popupImg);
+        }, 100); 
     };
+
+    useEffect(() => {
+        if (popupLoading) {
+            const timer = setTimeout(() => {
+                setPopupLoading(false);
+            }, 1000); 
+            return () => clearTimeout(timer);
+        }
+    }, [popupLoading]);
+
 
     useEffect(() => {
         if (popupImage) {
@@ -163,19 +184,70 @@ function UIUXProjects() {
                     </div>
                 ))}
             </div>
-            {popupImage && (
+            {/* {popupImage && (
                 <div className="fixed inset-0 bg-black/80 z-[300] flex justify-center items-start overflow-y-auto popupscroll">
                     <div className="relative min-h-screen w-full flex justify-center items-center px-[20px] md:px-0 py-10">
+
+                        {popupLoading && (
+                            <div className="absolute inset-0 flex justify-center items-center">
+                                <div className="w-12 h-12 border-4 border-t-[#8B5CF6] border-gray-300 rounded-full animate-spin"></div>
+                            </div>
+                        )}
+
+
                         <Image
                             src={popupImage}
                             alt="Full preview"
                             width={893}
                             height={4096}
-                            className="object-contain h-full rounded-[8px]"
+                            className={`object-contain h-full rounded-[8px] transition-opacity duration-300 ${popupLoading ? 'opacity-0' : 'opacity-100'
+                                }`}
+                            onLoad={() => setPopupLoading(false)}
                         />
+
                         <button
-                            onClick={() => setPopupImage('')}
+                            onClick={() => {
+                                setPopupImage('');
+                                setPopupLoading(false);
+                            }}
                             className="cursor-pointer fixed top-5 right-5 lg:right-10 flex items-center justify-center bg-[#ffff] text-[16px] md:text-[18px] w-10 h-10 rounded-full hover:bg-[#8B5CF6] text-[#8B5CF6] hover:text-[#ffff] transition-all"
+                        >
+                            ✖
+                        </button>
+                    </div>
+                </div>
+            )} */}
+            {popupImage && (
+                <div className="fixed inset-0 bg-black/80 z-[300] flex justify-center items-start overflow-y-auto popupscroll">
+                    <div className="relative min-h-screen w-full flex justify-center items-center px-[20px] md:px-0 py-10">
+
+                        {/* Spinner Loader */}
+                        {popupLoading && (
+                            <div className="absolute inset-0 z-[310] flex justify-center items-center bg-black/40 rounded-[8px]">
+                                <div className="w-12 h-12 border-4 border-t-[#8B5CF6] border-gray-300 rounded-full animate-spin"></div>
+                            </div>
+                        )}
+
+                        {/* Popup Image */}
+                        {!popupLoading && (
+                            <div className="relative z-[320] flex justify-center">
+                                <Image
+                                    src={popupImage}
+                                    alt="Full preview"
+                                    width={893}
+                                    height={4096}
+                                    className="object-contain h-full rounded-[8px] transition-opacity duration-300 opacity-100"
+                                />
+                            </div>
+                        )}
+
+                        {/* Close Button */}
+                        <button
+                            onClick={() => {
+                                setPopupImage('');
+                                setPopupLoading(false);
+                            }}
+                            className="cursor-pointer fixed top-5 right-5 lg:right-10 flex items-center justify-center bg-[#ffff] text-[16px] md:text-[18px] w-10 h-10 rounded-full hover:bg-[#8B5CF6] text-[#8B5CF6] hover:text-[#ffff] transition-all z-[330]"
                         >
                             ✖
                         </button>
