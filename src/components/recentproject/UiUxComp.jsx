@@ -22,7 +22,7 @@ function UIUXProjects() {
             title: 'Kids Store Mobile Ui',
             description: 'Tap to open the full site design',
             imageSrc: '/images/recentproject/uiux/kidstore.png',
-            // popupImg: '/images/recentproject/uiux/kidstore-full.png',
+            popupImg: '/images/recentproject/uiux/kidstore-full.png',
             alt: 'Kids Store Mobile Ui',
             category: 'UI/UX',
         },
