@@ -8,7 +8,13 @@
   --font-vcr-osd-mono: "VCR OSD Mono", monospace;
 }
 
-@theme inline {
+/* @theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-montserrat);
+  --font-mono: var(--font-vcr-osd-mono);
+} */
+@theme {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-montserrat);
